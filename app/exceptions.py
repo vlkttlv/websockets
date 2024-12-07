@@ -1,47 +1,38 @@
 from fastapi import HTTPException, status
 
 
-class BookingException(HTTPException):
+class ChatException(HTTPException):
     status_code = 500
     detail = ""
 
     def __init__(self):
         super().__init__(status_code=self.status_code, detail=self.detail)
 
-
-class UserAlreadyExistsException(BookingException):
+class UserAlreadyExistsException(ChatException):
     status_code = status.HTTP_409_CONFLICT
     detail = "Пользователь уже существует"
 
 
-class IncorrectEmailOrPasswordException(BookingException):
+class IncorrectEmailOrPasswordException(ChatException):
     status_code = status.HTTP_401_UNAUTHORIZED
     detail = "Неверная почта или пароль"
 
 
-class IncorrectRoleException(HTTPException):
-    status_code = status.HTTP_400_BAD_REQUEST
-    detail = "Вы не являетесь админом"
-
-    def __init__(self):
-        super().__init__(status_code=self.status_code, detail=self.detail)
-
-
-class TokenExpiredException(BookingException):
+class TokenExpiredException(ChatException):
     status_code = status.HTTP_401_UNAUTHORIZED
     detail = "Срок действия токена истек"
 
 
-class TokenAbsentException(BookingException):
+class TokenAbsentException(ChatException):
     status_code = status.HTTP_401_UNAUTHORIZED
     detail = "Токен отсутствует"
 
 
-class IncorrectTokenFormatException(BookingException):
+class IncorrectTokenFormatException(ChatException):
     status_code = status.HTTP_401_UNAUTHORIZED
     detail = "Неверный формат токена"
 
 
-class UserIsNotPresentException(BookingException):
+class UserIsNotPresentException(ChatException):
     status_code = status.HTTP_401_UNAUTHORIZED
 

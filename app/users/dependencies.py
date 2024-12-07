@@ -3,7 +3,7 @@ from fastapi import Depends, Request
 from jose import jwt, JWTError
 
 from app.config import settings
-from app.exceptions import IncorrectRoleException, IncorrectTokenFormatException, TokenAbsentException, TokenExpiredException, UserIsNotPresentException
+from app.exceptions import IncorrectTokenFormatException, TokenAbsentException, TokenExpiredException, UserIsNotPresentException
 from app.users.dao import UsersDAO
 
 

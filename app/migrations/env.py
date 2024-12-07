@@ -8,7 +8,7 @@ from sqlalchemy import pool
 from app.config import settings
 from alembic import context
 from app.users.models import Users
-
+from app.chat.models import Message
 sys.path.insert(0, dirname(dirname(dirname(abspath(__file__)))))
 
 

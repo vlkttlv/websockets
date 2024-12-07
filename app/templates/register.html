@@ -1,0 +1,167 @@
+<html><head><base href="http://example.com">
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+    
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+    
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 400px;
+            backdrop-filter: blur(10px);
+        }
+    
+        .form-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #333;
+            font-size: 2rem;
+            font-weight: 600;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+    
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+    
+        .form-group input:focus {
+            border-color: #667eea;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2), 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+    
+        .login-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #666;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
+        }
+    
+        .login-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+    
+        .login-link a:hover {
+            color: #764ba2;
+        }
+    
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+        .container {
+            animation: fadeIn 0.6s ease-out;
+        }
+    </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1 class="form-title">Регистрация</h1>
+            <form id="registration-form">
+                <div class="form-group">
+                    <input type="email" id="email" required placeholder="Введите ваш email">
+                </div>
+                <div class="form-group">
+                    <input type="text" id="firstname" required placeholder="Введите ваше имя">
+                </div>
+                <div class="form-group">
+                    <input type="text" id="lastname" required placeholder="Введите вашу фамилию">
+                </div>
+                <div class="form-group">
+                    <input type="password" id="password" required placeholder="Введите пароль">
+                </div>
+                <button type="submit" class="submit-btn">Зарегистрироваться</button>
+            </form>
+            <div class="login-link">
+                Уже зарегистрированы? <a href="https://example.com/login">Войти</a>
+            </div>
+        </div>
+    
+        <script>
+            document.getElementById('registration-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const email = document.getElementById('email').value;
+                const firstname = document.getElementById('firstname').value;
+                const lastname = document.getElementById('lastname').value;
+                const password = document.getElementById('password').value;
+    
+                // Здесь можно добавить валидацию и отправку данных на сервер
+                console.log({
+                    email,
+                    firstname,
+                    lastname,
+                    password
+                });
+            });
+    
+            // Добавляем эффект при фокусе на инпуты
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.style.transform = 'translateY(-2px)';
+                });
+    
+                input.addEventListener('blur', function() {
+                    this.parentElement.style.transform = 'translateY(0)';
+                });
+            });
+        </script>
+    </body>
+    </html>
