@@ -1,7 +1,9 @@
 from app.dao.base import BaseDAO
 from app.chat.models import Message
-
+from sqlalchemy import delete, select, insert, or_, and_
+from app.database import async_session_maker
 class MessagesDAO(BaseDAO):
+
     model = Message
 
     @classmethod

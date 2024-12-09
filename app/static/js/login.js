@@ -9,9 +9,8 @@ async function loginUser() {
         headers: {'Accept': 'application/json','Content-Type': 'application/json'},
         body: JSON.stringify(data),
     }).then(response => {
-        console.log(response);
         if (response.status === 200) {
-            window.location.href = "/pages/auth/register"
+            window.location.href = "/pages/chat/main"
         }
         else{
             alert("неверный логин или пароль")
