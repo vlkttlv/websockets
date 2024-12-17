@@ -1,92 +1,50 @@
-{% block head %}
-<html><head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', path='styles/chat.css') }}">
-    <title>Чат</title>
-    </head>
-{% endblock %}
 
-{% block content %}
-    <body>
-        <div class="chat-container">
-            <div class="sidebar">
-                <div class="contacts-header">All</div>
-                <div class="users-list">
-                    {% for user in all_users %}
-                        {% if user.id != current_user.id %}
-                        <div class="user-item" data-name="{{user.firstname}} {{user.lastname}}">
-                            <div class="user-avatar">{{user.firstname[0]}}{{user.lastname[0]}}</div>
-                            <div class="user-info">
-                                <div class="user-name">{{user.firstname}} {{user.lastname}}</div>
-                            </div>
-                        </div>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-            </div>
-            <div class="chat-content">
-                <div class="header">
-                    <h2 class="chat-title">Чат</h2>
-                    <button class="logout-btn">Выйти</button>
-                </div>
-                <div class="no-chat-selected">
-                    Выберите чат для общения
-                </div>
-                <div class="chat-area">
-                    <div class="chat-messages"></div>
-                    <div class="message-input-container">
-                        <textarea class="message-input" placeholder="Введите сообщение..."></textarea>
-                        <button class="send-btn">Отправить</button>
-                    </div>
-                </div>
-            </div>
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мини-чат</title>
+    <link rel="stylesheet" type="text/css" href="/static/styles/chat.css">
+</head>
+<body>
+<div class="chat-container">
+    <div class="user-list" id="userList">
+        <!-- Добавляем фиксированный элемент "Избранное" -->
+        <div class="user-item" data-user-id="{{ user.id }}">
+            All
         </div>
-    
-        <script>
-            const userItems = document.querySelectorAll('.user-item');
-            const chatTitle = document.querySelector('.chat-title');
-            const chatArea = document.querySelector('.chat-area');
-            const noChatSelected = document.querySelector('.no-chat-selected');
-            
-            userItems.forEach(item => {
-                item.addEventListener('click', () => {
-                    userItems.forEach(i => i.classList.remove('active'));
-                    item.classList.add('active');
-                    const userName = item.dataset.name;
-                    chatTitle.textContent = `Чат с ${userName}`;
-                    noChatSelected.style.display = 'none';
-                    chatArea.classList.add('active');
-                });
-            });
-    
-            const messageInput = document.querySelector('.message-input');
-            const sendButton = document.querySelector('.send-btn');
-            const chatMessages = document.querySelector('.chat-messages');
-    
-            function sendMessage() {
-                const message = messageInput.value.trim();
-                if (message) {
-                    const messageElement = document.createElement('div');
-                    messageElement.classList.add('message', 'sent');
-                    messageElement.textContent = message;
-                    chatMessages.appendChild(messageElement);
-                    messageInput.value = '';
-                    chatMessages.scrollTop = chatMessages.scrollHeight;
-                }
-            }
-    
-            sendButton.addEventListener('click', sendMessage);
-            messageInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    sendMessage();
-                }
-            });
-    
-            document.querySelector('.logout-btn').addEventListener('click', () => {
-                window.location.href = 'https://example.com/login';
-            });
-        </script>
-    </body>
-    </html>
-{% endblock %}
+        <!-- Выводим остальных пользователей, исключая текущего пользователя -->
+        {% for chat in all_users %}
+            {% if chat.id != user.id %}
+                <div class="user-item" data-user-id="{{ chat.id }}">
+                    {{chat.firstname}} {{chat.lastname}}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div class="chat-area">
+        <div class="chat-header" id="chatHeader">
+            <span>Чат</span>
+            <button class="logout-button" id="logoutButton" onclick="logout()">Выход</button>
+        </div>
+        <div class="messages" id="messages">
+            <div class="welcome-message">Выберите чат для общения</div>
+        </div>
+        <div class="input-area">
+            <input type="text" id="messageInput" placeholder="Введите сообщение..." disabled>
+            <button id="sendButton" disabled>Отправить</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Передаем идентификатор текущего пользователя в JavaScript
+    const currentUserId = parseInt("{{ user.id }}", 10);
+</script>
+
+<script src="/static/js/chat.js"></script>
+</body>
+</html>

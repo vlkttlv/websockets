@@ -3,12 +3,13 @@ from app.exceptions import IncorrectEmailOrPasswordException, UserAlreadyExistsE
 from app.users.auth import authenticate_user, create_access_token, get_password_hash
 from app.users.dependencies import get_current_user
 from app.users.models import Users
-from app.users.schemas import SUserRegister, SUserLogin
+from app.users.schemas import SUserRegister, SUserLogin, SUsers
 from app.users.dao import UsersDAO
+from typing import List
 
 router = APIRouter(
     prefix="/auth",
-    tags=["Аутенфикация"]
+    tags=["Auth"]
 )
 
 
@@ -20,7 +21,7 @@ async def register_user(user_data: SUserRegister):
         raise UserAlreadyExistsException
     hashed_password = get_password_hash(user_data.password)
     await UsersDAO.add(email=user_data.email, firstname=user_data.firstname,
-                        lastname=user_data.firstname, hashed_password=hashed_password)
+                        lastname=user_data.lastname, hashed_password=hashed_password)
 
 
 @router.post("/login")
@@ -39,3 +40,12 @@ async def login_user(response: Response, user_data: SUserLogin):
 async def logout_user(response: Response):
     """Функция, с помощью которой пользователь выходит из системы. Удаляет действующую куку"""
     response.delete_cookie("access_token")
+
+router_user = APIRouter(
+    prefix="/users",
+    tags=["Users"]
+)
+@router_user.get("/")
+async def get_users() -> List[SUsers]:
+    all_users = await UsersDAO.find_all()
+    return all_users
